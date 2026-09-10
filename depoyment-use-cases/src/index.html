@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#07131b">
+	<title>Cluster / webapp</title>
+	<style>
+		:root {
+			--ink: #eaf7f3;
+			--muted: #8aa9a7;
+			--line: rgba(183, 226, 215, .14);
+			--panel: rgba(14, 37, 42, .78);
+			--teal: #55e6c1;
+			--yellow: #f5c96b;
+			--coral: #ff897b;
+			--bg: #07131b;
+		}
+
+		* { box-sizing: border-box; }
+		body {
+			margin: 0;
+			min-width: 320px;
+			color: var(--ink);
+			background: var(--bg);
+			font-family: Georgia, 'Times New Roman', serif;
+			-webkit-font-smoothing: antialiased;
+		}
+		body::before {
+			content: '';
+			position: fixed;
+			inset: 0;
+			z-index: -1;
+			background: radial-gradient(circle at 10% 0%, #12434a 0, transparent 32%),
+				radial-gradient(circle at 95% 90%, #33251d 0, transparent 35%),
+				linear-gradient(130deg, #07131b 35%, #0b2227 100%);
+		}
+		.shell { width: min(1160px, calc(100% - 48px)); margin: 0 auto; padding: 30px 0 52px; }
+		header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 74px; }
+		.mark { display: flex; align-items: center; gap: 12px; font: 600 14px Consolas, monospace; letter-spacing: .08em; text-transform: uppercase; }
+		.mark-icon { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--teal); color: var(--teal); font-size: 18px; transform: rotate(45deg); }
+		.mark-icon span { transform: rotate(-45deg); }
+		.environment { display: flex; align-items: center; gap: 9px; color: var(--muted); font: 12px Consolas, monospace; }
+		.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 5px rgba(85, 230, 193, .12); }
+		.hero { display: grid; grid-template-columns: 1.15fr .85fr; align-items: end; gap: 70px; padding-bottom: 66px; border-bottom: 1px solid var(--line); }
+		.kicker { color: var(--teal); font: 12px Consolas, monospace; letter-spacing: .18em; text-transform: uppercase; }
+		h1 { max-width: 700px; margin: 16px 0 22px; font-size: clamp(48px, 8vw, 100px); font-weight: 400; line-height: .9; letter-spacing: -.06em; }
+		h1 em { color: var(--yellow); font-style: normal; }
+		.intro { max-width: 500px; margin: 0; color: var(--muted); font-size: 18px; line-height: 1.55; }
+		.terminal { padding: 23px; border: 1px solid var(--line); border-radius: 5px; background: rgba(3, 14, 20, .72); box-shadow: 18px 18px 0 rgba(0, 0, 0, .12); font: 12px/2 Consolas, monospace; }
+		.terminal-top { display: flex; gap: 6px; padding-bottom: 15px; color: var(--muted); border-bottom: 1px solid var(--line); }
+		.terminal-top i { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); }
+		.terminal-top i:nth-child(2) { background: var(--yellow); }
+		.terminal-top i:nth-child(3) { background: var(--teal); }
+		.terminal p { margin: 15px 0 0; color: var(--muted); }
+		.terminal strong { color: var(--teal); font-weight: 400; }
+		.terminal .cmd { color: var(--ink); }
+		.section { padding-top: 31px; }
+		.section-heading { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
+		h2 { margin: 0; font-size: 22px; font-weight: 400; }
+		.section-heading span { color: var(--muted); font: 11px Consolas, monospace; }
+		.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+		.stat, .service { border: 1px solid var(--line); background: var(--panel); }
+		.stat { padding: 21px; }
+		.stat-label { color: var(--muted); font: 11px Consolas, monospace; text-transform: uppercase; letter-spacing: .08em; }
+		.stat strong { display: block; margin: 12px 0 5px; font-size: 32px; font-weight: 400; }
+		.healthy { color: var(--teal); }
+		.stat small { color: var(--muted); font: 11px Consolas, monospace; }
+		.service-list { display: grid; gap: 8px; }
+		.service { display: grid; grid-template-columns: 1.4fr 1fr .8fr auto; align-items: center; gap: 18px; padding: 17px 20px; }
+		.service-name { font-size: 17px; }
+		.service-name small { display: block; margin-top: 5px; color: var(--muted); font: 11px Consolas, monospace; }
+		.service-meta { color: var(--muted); font: 12px Consolas, monospace; }
+		.badge { justify-self: end; padding: 6px 9px; border: 1px solid rgba(85, 230, 193, .3); color: var(--teal); font: 10px Consolas, monospace; text-transform: uppercase; }
+		footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 60px; color: var(--muted); font: 11px Consolas, monospace; }
+		@media (max-width: 760px) {
+			.shell { width: min(100% - 30px, 560px); padding-top: 20px; }
+			header { padding-bottom: 48px; }
+			.hero { grid-template-columns: 1fr; gap: 34px; padding-bottom: 42px; }
+			h1 { font-size: clamp(56px, 18vw, 92px); }
+			.stats { grid-template-columns: repeat(2, 1fr); }
+			.service { grid-template-columns: 1fr auto; gap: 9px 15px; }
+			.service-meta { grid-column: 1; }
+			.badge { grid-column: 2; grid-row: 1 / span 2; }
+			footer { flex-direction: column; padding-top: 40px; }
+		}
+	</style>
+</head>
+<body>
+	<main class="shell">
+		<header>
+			<div class="mark"><div class="mark-icon"><span>⌘</span></div> kube / observe</div>
+			<div class="environment"><span class="pulse"></span> cluster online</div>
+		</header>
+
+		<section class="hero" aria-labelledby="page-title">
+			<div>
+				<div class="kicker">namespace / webapp</div>
+				<h1 id="page-title">A small page,<br><em>containerized.</em></h1>
+				<p class="intro">This is a lightweight NGINX workload running behind a Kubernetes service. One image, one deployment, a clear view of what is alive.</p>
+			</div>
+			<div class="terminal" aria-label="Deployment status">
+				<div class="terminal-top"><i></i><i></i><i></i></div>
+				<p><strong>$</strong> <span class="cmd">kubectl get pods -n webapp</span></p>
+				<p>webapp-7f7d6c8b9d <strong>Running</strong><br>1/1 ready &nbsp; &nbsp; 12m uptime</p>
+			</div>
+		</section>
+
+		<section class="section" aria-labelledby="summary-title">
+			<div class="section-heading"><h2 id="summary-title">Cluster summary</h2><span>REFRESHED JUST NOW</span></div>
+			<div class="stats">
+				<div class="stat"><div class="stat-label">Pods ready</div><strong class="healthy">01 / 01</strong><small>all systems go</small></div>
+				<div class="stat"><div class="stat-label">Service port</div><strong>32000</strong><small>node port exposed</small></div>
+				<div class="stat"><div class="stat-label">CPU request</div><strong>90m</strong><small>limit 200m</small></div>
+				<div class="stat"><div class="stat-label">Memory</div><strong>100Mi</strong><small>limit 128Mi</small></div>
+			</div>
+		</section>
+
+		<section class="section" aria-labelledby="services-title">
+			<div class="section-heading"><h2 id="services-title">Workloads &amp; routes</h2><span>MANIFEST / WEBAPP.YAML</span></div>
+			<div class="service-list">
+				<div class="service"><div class="service-name">webapp <small>pod / nginx:latest</small></div><div class="service-meta">80 / TCP</div><div class="service-meta">1 replica</div><div class="badge">healthy</div></div>
+				<div class="service"><div class="service-name">webapp-service <small>service / NodePort</small></div><div class="service-meta">8080 → 80</div><div class="service-meta">nodePort 32000</div><div class="badge">routed</div></div>
+			</div>
+		</section>
+
+		<footer><span>built for the webapp namespace</span><span>kubernetes / nginx / v1</span></footer>
+	</main>
+</body>
+</html>
