@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ action_name|title }} Contact{% endblock %}
+{% block content %}
+  <section class="surface panel form-card">
+    <p class="eyebrow">Contact details</p>
+    <h1>{{ action_name|title }} a contact</h1>
+    <p class="muted">Keep the directory accurate with a name and a reachable phone number.</p>
+    <form class="form-grid" action="{{ url_for('add_record' if action_name == 'save' else 'update_record') }}" method="post">
+      <div><label for="name">Full name</label><input placeholder="e.g. Ada Lovelace" type="text" name="username" id="name" value="{{ request.form.get('username', '') }}" maxlength="100" required autofocus></div>
+      <div><label for="number">Phone number</label><input placeholder="e.g. 1234567890" type="tel" inputmode="numeric" name="phonenumber" id="number" value="{{ request.form.get('phonenumber', '') }}" maxlength="100" required></div>
+      <div class="form-actions"><button type="submit">{{ action_name|title }} contact</button><a class="button secondary" href="{{ url_for('find_records') }}">Cancel</a></div>
+      {% if not_valid %}<div class="notice error" role="alert">{{ message }}</div>{% endif %}
+      {% if show_result %}<div class="notice" role="status">{{ result }}</div>{% endif %}
+    </form>
+  </section>
+{% endblock %}

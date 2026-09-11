@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Phonebook{% endblock %} | Contact Desk</title>
+  <style>
+    :root { --ink:#17211b; --muted:#68756c; --paper:#f5f2e9; --surface:#fffdf7; --line:#d9dfd4; --green:#1f6b50; --green-dark:#154b39; --mint:#dcefe2; --coral:#c85a43; --shadow:0 18px 50px rgba(35,59,43,.12); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); background:var(--paper); font-family:"Trebuchet MS","Segoe UI",sans-serif; }
+    body::before { content:""; position:fixed; inset:0 0 auto; height:360px; z-index:-1; background:linear-gradient(135deg,#dcefe2 0%,#f5f2e9 72%); }
+    a { color:inherit; }
+    .shell { width:min(1120px,calc(100% - 40px)); margin:0 auto; padding:28px 0 56px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:64px; }
+    .logo { text-decoration:none; font-family:Georgia,serif; font-size:1.4rem; font-weight:700; }
+    .logo span { color:var(--green); }
+    nav { display:flex; gap:8px; flex-wrap:wrap; }
+    nav a { padding:9px 13px; border-radius:8px; color:var(--muted); text-decoration:none; font-size:.9rem; }
+    nav a:hover { background:var(--surface); color:var(--green-dark); box-shadow:0 3px 12px rgba(35,59,43,.08); }
+    .eyebrow { color:var(--green); font-size:.75rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+    h1,h2 { margin-top:0; font-family:Georgia,serif; letter-spacing:-.02em; }
+    h1 { max-width:680px; margin-bottom:14px; font-size:clamp(2.3rem,6vw,4.5rem); line-height:.98; }
+    h2 { font-size:1.7rem; margin-bottom:8px; }
+    .muted { color:var(--muted); line-height:1.6; }
+    .layout { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:28px; align-items:start; }
+    .surface { background:rgba(255,253,247,.88); border:1px solid rgba(217,223,212,.9); border-radius:12px; box-shadow:var(--shadow); }
+    .panel { padding:28px; }
+    .toolbar { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:24px; }
+    .search { display:flex; gap:8px; width:min(430px,100%); }
+    input { width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; }
+    input:focus { outline:3px solid rgba(31,107,80,.16); border-color:var(--green); }
+    label { display:block; margin-bottom:7px; color:var(--green-dark); font-size:.9rem; font-weight:700; }
+    button,.button { display:inline-flex; justify-content:center; align-items:center; border:0; border-radius:8px; padding:12px 17px; background:var(--green); color:#fff; font:inherit; font-weight:700; text-decoration:none; cursor:pointer; }
+    button:hover,.button:hover { background:var(--green-dark); }
+    .button.secondary { background:var(--mint); color:var(--green-dark); }
+    .button.danger { background:var(--coral); }
+    .stats { display:grid; gap:12px; }
+    .stat { padding:20px; background:var(--mint); border-radius:10px; }
+    .stat strong { display:block; font-family:Georgia,serif; font-size:2.2rem; color:var(--green-dark); }
+    .stat span { color:var(--muted); font-size:.85rem; }
+    .contact-list { display:grid; gap:10px; }
+    .contact { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:15px 0; border-bottom:1px solid var(--line); }
+    .contact:last-child { border-bottom:0; }
+    .contact-name { margin-bottom:3px; font-weight:700; }
+    .contact-number { color:var(--muted); font-size:.9rem; }
+    .contact-id { color:var(--green); font-size:.78rem; }
+    .empty { padding:35px 10px; text-align:center; color:var(--muted); }
+    .form-card { width:min(620px,100%); margin:0 auto; }
+    .form-grid { display:grid; gap:18px; }
+    .form-actions { display:flex; gap:10px; margin-top:6px; }
+    .notice { margin-top:20px; padding:13px 15px; border-radius:8px; background:var(--mint); color:var(--green-dark); font-weight:700; }
+    .notice.error { background:#fbe4de; color:#8f3428; }
+    .footer { margin-top:50px; color:var(--muted); font-size:.82rem; }
+    @media (max-width:760px) { .shell{width:min(100% - 28px,620px);padding-top:18px}.topbar{align-items:flex-start;flex-direction:column;gap:14px;margin-bottom:42px}.layout{grid-template-columns:1fr}.toolbar{align-items:stretch;flex-direction:column}.search{width:100%}h1{font-size:3rem} }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="logo" href="{{ url_for('find_records') }}">contact<span>desk</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="{{ url_for('find_records') }}">Directory</a>
+        <a href="{{ url_for('add_record') }}">Add contact</a>
+        <a href="{{ url_for('update_record') }}">Update</a>
+        <a href="{{ url_for('delete_record') }}">Delete</a>
+      </nav>
+    </header>
+    {% block content %}{% endblock %}
+    <p class="footer">A small, practical directory for {{ developer_name|default('your team') }}.</p>
+  </main>
+</body>
+</html>

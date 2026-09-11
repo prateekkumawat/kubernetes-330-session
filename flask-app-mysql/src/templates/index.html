@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Directory{% endblock %}
+{% block content %}
+  <section class="hero">
+    <p class="eyebrow">Private contact directory</p>
+    <h1>Keep every important number close.</h1>
+    <p class="muted">Search, add, and maintain your contacts from one calm, focused workspace.</p>
+  </section>
+  <section class="layout" aria-label="Contact directory">
+    <div class="surface panel">
+      <div class="toolbar">
+        <div><h2>All contacts</h2><p class="muted">{{ contacts|length }} result{% if contacts|length != 1 %}s{% endif %}{% if search %} for "{{ search }}"{% endif %}</p></div>
+        <form class="search" action="{{ url_for('find_records') }}" method="get">
+          <label for="search" style="position:absolute;left:-9999px">Search contacts</label>
+          <input id="search" name="q" type="search" value="{{ search }}" placeholder="Search name or number" />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      {% if db_error %}
+        <div class="notice error" role="alert">{{ db_error }}</div>
+      {% elif contacts %}
+        <div class="contact-list">
+          {% for contact in contacts %}
+            <article class="contact"><div><div class="contact-name">{{ contact.name|title }}</div><div class="contact-number">{{ contact.number }}</div></div><span class="contact-id">#{{ contact.id }}</span></article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty"><p><strong>{% if search %}No matching contacts{% else %}Your directory is empty{% endif %}</strong></p><p>{% if search %}Try a different name or number.{% else %}Add your first contact to get started.{% endif %}</p></div>
+      {% endif %}
+    </div>
+    <aside class="stats"><div class="stat"><strong>{{ contacts|length }}</strong><span>contacts shown</span></div><a class="button" href="{{ url_for('add_record') }}">+ Add a contact</a>{% if search %}<a class="button secondary" href="{{ url_for('find_records') }}">Clear search</a>{% endif %}</aside>
+  </section>
+{% endblock %}

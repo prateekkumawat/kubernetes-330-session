@@ -14,7 +14,7 @@ metadata:
 spec:
   containers:
   - name: web1
-    image: prateekkumawat/app:webapp-1
+    image: prateekkumawat/app:webapp-2
     resources:
       requests: 
         cpu: "90m"

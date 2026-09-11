@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Delete Contact{% endblock %}
+{% block content %}
+  <section class="surface panel form-card">
+    <p class="eyebrow">Destructive action</p>
+    <h1>Remove a contact</h1>
+    <p class="muted">Enter the exact contact name. This removes the record from the directory immediately.</p>
+    <form class="form-grid" action="{{ url_for('delete_record') }}" method="post">
+      <div><label for="name">Contact name</label><input placeholder="e.g. Ada Lovelace" type="text" name="username" id="name" value="{{ request.form.get('username', '') }}" maxlength="100" required autofocus></div>
+      <div class="form-actions"><button class="danger" type="submit">Delete contact</button><a class="button secondary" href="{{ url_for('find_records') }}">Cancel</a></div>
+      {% if not_valid %}<div class="notice error" role="alert">{{ message }}</div>{% endif %}
+      {% if show_result %}<div class="notice" role="status">{{ result }}</div>{% endif %}
+    </form>
+  </section>
+{% endblock %}
