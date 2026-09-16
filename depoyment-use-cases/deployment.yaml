@@ -38,8 +38,30 @@ metadata:
 spec:
   selector:
     app: app1
-  type: NodePort  
+  type: ClusterIP 
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 32000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: deploy-app-ingress
+  namespace: intial-deploy
+  annotations:
+    konghq.com/strip-path: "true"
+    konghq.com/protocols: "http"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: localapp.domain1.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: deploy-app-service
+            port:
+              number: 80    
