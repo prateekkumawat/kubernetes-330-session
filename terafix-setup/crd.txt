@@ -1,0 +1,14 @@
+# Install Traefik Resource Definitions:
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.7/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+
+# Install RBAC for Traefik:
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v3.7/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
+
+#kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+
+/etc/hosts
+192.168.1.9  dashboard.localhost
+
+# helm upgrade --install traefik traefik/traefik -f .\values.yaml --wait --namespace traefik --create-namespace
+
+http://dashboard.localhost/dashboard/
