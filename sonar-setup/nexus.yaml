@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: build
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus
+  namespace: build
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus-server
+  template:
+    metadata:
+      labels:
+        app: nexus-server
+    spec:
+      securityContext:
+        fsGroup: 200
+
+      containers:
+      - name: nexus
+        image: sonatype/nexus3:latest
+
+        securityContext:
+          runAsUser: 200
+          runAsGroup: 200
+
+        ports:
+        - containerPort: 8081
+
+        resources:
+          limits:
+            memory: "4Gi"
+            cpu: "1000m"
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus-service
+  namespace: build
+spec:
+  selector: 
+    app: nexus-server
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8081   
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nexus-ingress
+  namespace: build
+  labels:
+    app: nexus-server
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+      - nexus.domain2.example.com
+      secretName: ingress-tls
+
+  rules:
+  - host: nexus.domain2.example.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: nexus-service
+            port: 
+              number: 80
