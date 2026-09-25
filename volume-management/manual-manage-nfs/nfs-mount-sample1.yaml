@@ -29,7 +29,7 @@ spec:
       mountPath: /opt
   volumes:
   - name: nfsvol
-    persistentVolumeClaimName: 
+    persistentVolumeClaim: 
       - claimName: nfs-check-data   
 
 ---
