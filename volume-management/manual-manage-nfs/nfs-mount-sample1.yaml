@@ -30,7 +30,7 @@ spec:
   volumes:
   - name: nfsvol
     persistentVolumeClaim: 
-      - claimName: nfs-check-data   
+      claimName: nfs-check-data   
 
 ---
 apiVersion: v1
