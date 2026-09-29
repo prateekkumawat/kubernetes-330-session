@@ -85,7 +85,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-    - host: sonar.mgmt.ocelottraining.com
+    - host: sonar.ocelottraining.com
       http:
         paths:
           - path: /
