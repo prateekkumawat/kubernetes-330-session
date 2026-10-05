@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storage-access
+  namespace: nfs-check
+  labels:
+    name: myapp1
+spec:
+  containers:
+  - name: myapp1
+    image: ubuntu:latest 
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    command:
+      - sleep
+      - "3600"
+    volumeMounts:
+    - name: externalvol
+      mountPath: /opt
+  volumes:
+  - name: externalvol
+    persistentVolumeClaim: 
+      claimName: vol1
