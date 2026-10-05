@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: longhorn-backup-target-secret
+  namespace: longhorn-system
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: "xxxxxxxxxx"
+  AWS_SECRET_ACCESS_KEY: "xxxxxxxxxx"
+  AWS_REGION: "ap-south-1"
+
+---
+# longhorn-s3-backup-settings.yaml
+# Configure Longhorn to use S3 as the backup target
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: longhorn-default-resource
+  namespace: longhorn-system
+data:
+  default-resource.yaml: |
+    "backup-target": "s3://longhorn-backupf@ap-south-1/"
+    "backup-target-credential-secret": "longhorn-backup-target-secret"
+    "backupstore-poll-interval": "180"
