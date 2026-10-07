@@ -50,6 +50,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  StorageClassName: ebsstore
+  storageClassName: ebsstore
   accessModes:
     - ReadWriteOnce
