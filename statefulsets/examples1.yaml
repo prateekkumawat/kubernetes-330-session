@@ -46,15 +46,51 @@ spec:
         requests:
           storage: 1Gi  
 
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: nginx-data-vol
-# spec:
-#   resources:
-#     requests:
-#       storage: 1Gi
-#   storageClassName: ebsstore
-#   accessModes:
-#     - ReadWriteOnce
+---
+### compersion with deployment 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx1
+  labels:
+    app: nginx1
+spec:
+  ports:
+  - port: 80
+    name: web1
+  clusterIP: None
+  selector:
+    app: nginx1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx1
+  template:
+    metadata:
+      labels:
+        app: nginx1
+    spec:
+      containers:
+      - name: nginx
+        image: registry.k8s.io/nginx-slim:0.21
+        ports:
+        - containerPort: 80
+          name: web1
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: ebsstore
+      resources:
+        requests:
+          storage: 1Gi
