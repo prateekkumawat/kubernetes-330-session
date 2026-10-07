@@ -36,10 +36,10 @@ spec:
         volumeMounts:
         - name: www
           mountPath: /usr/share/nginx/html
-    volumes:
-    - name: www
-      persistentVolumeClaim: 
-        claimName: nginx-data-vol
+      volumes:
+      - name: www
+        persistentVolumeClaim: 
+          claimName: nginx-data-vol
 
 ---
 apiVersion: v1
