@@ -36,20 +36,25 @@ spec:
         volumeMounts:
         - name: www
           mountPath: /usr/share/nginx/html
-      volumes:
-      - name: www
-        persistentVolumeClaim: 
-          claimName: nginx-data-vol
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: ebsstore
+      resources:
+        requests:
+          storage: 1Gi  
 
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nginx-data-vol
-spec:
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: ebsstore
-  accessModes:
-    - ReadWriteOnce
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: nginx-data-vol
+# spec:
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: ebsstore
+#   accessModes:
+#     - ReadWriteOnce
