@@ -89,6 +89,8 @@ spec:
       - name:  www
         persistentVolumeClaim:
           claimName: nginx-vol1
+      nodeSelector:
+        kubernetes.io/hostname: ip-172-31-11-199.ap-south-1.compute.internal    
 
 
 ---
