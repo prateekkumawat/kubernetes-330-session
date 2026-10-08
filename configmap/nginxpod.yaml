@@ -28,6 +28,27 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        env: 
+        - name: PLAYER_INITIAL_LIVES
+          valueFrom:
+            configMapKeyRef:
+              name: keydata
+              key: player_initial_lives
+        - name: WEBCONF_FILE_PATH
+          valueFrom:
+            configMapKeyRef:
+              name: keydata
+              key: configmap_file
+        - name: WEB_EXPOSED_PORT 
+          valueFrom:
+            configMapKeyRef:
+              name: keydata
+              key: exposed_port
+        - name: WEB_PROXY_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: keydata
+              key: proxy_port                 
         ports:
         - name: web
           protocol: TCP

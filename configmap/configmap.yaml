@@ -1,3 +1,4 @@
+# This is a ConfigMap definition for Nginx configuration file method
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -41,3 +42,20 @@ data:
             proxy_set_header X-Forwarded-Proto $scheme;
         }
     }
+
+
+---
+# config map key value pair example 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keydata
+  namespace: data
+  labels:
+    app: data
+data:
+  player_initial_lives: "3"
+  configmap_file: "/etc/ngninx/conf.d/webproxy.conf"
+  exposed_port: "80"
+  proxy_port: "82"
+
