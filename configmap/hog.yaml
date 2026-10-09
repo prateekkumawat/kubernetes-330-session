@@ -7,7 +7,7 @@ metadata:
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: LimitRangeName
+  name: limits
   namespace: hogs
 spec:
   limits:
