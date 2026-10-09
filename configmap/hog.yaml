@@ -14,14 +14,7 @@ spec:
       containers:
       - name: hogsapp
         image: vish/stress
-        restartPolicy: Always
-        resources: 
-          requests:
-            memory: "1000Mi"
-            cpu: "800m"
-          limits: 
-            memory: "1500Mi"
-            cpu: "1600m"    
+        restartPolicy: Always    
         args: 
         - -cpus
         - "2"
