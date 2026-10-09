@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hogs
+spec:
+  selector:
+    matchLabels:
+      app: hogs
+  template:
+    metadata:
+      labels:
+        app: hogs
+    spec:
+      containers:
+      - name: hogsapp
+        image: vish/stress
