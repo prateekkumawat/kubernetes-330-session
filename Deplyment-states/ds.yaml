@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-one
+  namespace: default
+  labels:
+    app: ds-one
+spec:
+  selector:
+    matchLabels:
+      app: ds-one
+  template:
+    metadata:
+      labels:
+        app: ds-one
+    spec:
+      containers:
+      - name: ds-one
+        image: ubuntu:latest
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        command:
+          - sleep
+          - "3600"
