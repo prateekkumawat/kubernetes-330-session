@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-affinity
+spec:
+  replica: 9
+  selector:
+    matchLabels:
+      app: myapp-affinity
+  template:
+    metadata:
+      labels:
+        app: myapp-affinity
+    spec:
+      affinity: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: ondemand
+                operator: In
+                values:
+                - app
+      containers:
+      - name: myapp-affinity
+        image: nginx 
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
