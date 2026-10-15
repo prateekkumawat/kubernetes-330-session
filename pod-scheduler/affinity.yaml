@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myapp-affinity
 spec:
-  replica: 9
+  replicas: 9
   selector:
     matchLabels:
       app: myapp-affinity
