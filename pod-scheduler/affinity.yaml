@@ -32,9 +32,5 @@ spec:
       containers:
       - name: myapp-affinity
         image: nginx 
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 80
