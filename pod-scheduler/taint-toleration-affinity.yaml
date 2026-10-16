@@ -30,7 +30,7 @@ spec:
             - key: topology.kubernetes.io/zone
               operator: In
               values: 
-              - ap-south-1b 
+              - ap-south-1a
   tolerations: 
   - key: "ondemand"
     operator: "Equal"
