@@ -8,6 +8,13 @@ spec:
   containers:
   - name: busybox1
     image: busybox:latest
+    resources: 
+      requests: 
+        cpu: "500M"
+        memory: "500Mi"
+      limits: 
+        cpu: "700M"
+        memory: "700Mi"
     args: 
     - sleep 
     - "10000"
@@ -26,6 +33,13 @@ spec:
     args: 
     - sleep 
     - "10000"
+    resources: 
+      requests: 
+        cpu: "500M"
+        memory: "500Mi"
+      limits: 
+        cpu: "700M"
+        memory: "700Mi"
 
 ---
 apiVersion: v1
@@ -41,4 +55,55 @@ spec:
     args: 
     - sleep 
     - "10000"
+    resources: 
+      requests: 
+        cpu: "500M"
+        memory: "500Mi"
+      limits: 
+        cpu: "700M"
+        memory: "700Mi"
     
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox4
+  labels:
+    app.kubernetes.io/name: busybox3
+spec:
+  containers:
+  - name: busybox4
+    image: busybox:latest
+    args: 
+    - sleep 
+    - "10000"
+    resources: 
+      requests: 
+        cpu: "500M"
+        memory: "500Mi"
+      limits: 
+        cpu: "700M"
+        memory: "700Mi"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox5
+  labels:
+    app.kubernetes.io/name: busybox3
+spec:
+  containers:
+  - name: busybox5
+    image: busybox:latest
+    args: 
+    - sleep 
+    - "10000"
+    resources: 
+      requests: 
+        cpu: "500M"
+        memory: "500Mi"
+      limits: 
+        cpu: "700M"
+        memory: "700Mi"
+
