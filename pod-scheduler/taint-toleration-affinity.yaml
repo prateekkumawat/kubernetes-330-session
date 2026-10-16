@@ -8,13 +8,13 @@ spec:
   containers:
   - name: busybox1
     image: busybox:latest
-    resources: 
-      requests: 
-        cpu: "100M"
-        memory: "100Mi"
-      limits: 
-        cpu: "200M"
-        memory: "200Mi"
+    # resources: 
+    #   requests: 
+    #     cpu: "100M"
+    #     memory: "100Mi"
+    #   limits: 
+    #     cpu: "200M"
+    #     memory: "200Mi"
     args: 
     - sleep 
     - "10000"
