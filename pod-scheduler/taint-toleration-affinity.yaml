@@ -82,12 +82,12 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: busybox2
+  name: busybox3
   labels:
-    app.kubernetes.io/name: busybox2
+    app.kubernetes.io/name: busybox3
 spec:
   containers:
-  - name: busybo2
+  - name: busybox3
     image: busybox:latest
     # resources: 
     #   requests: 
