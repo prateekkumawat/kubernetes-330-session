@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox1
+  labels:
+    app.kubernetes.io/name: busybox1
+spec:
+  containers:
+  - name: busybox1
+    image: busybox:latest
+    args: 
+    - sleep 
+    - "10000"
+    
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox2
+  labels:
+    app.kubernetes.io/name: busybox2
+spec:
+  containers:
+  - name: busybox2
+    image: busybox:latest
+    args: 
+    - sleep 
+    - "10000"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox3
+  labels:
+    app.kubernetes.io/name: busybox3
+spec:
+  containers:
+  - name: busybox3
+    image: busybox:latest
+    args: 
+    - sleep 
+    - "10000"
+    
