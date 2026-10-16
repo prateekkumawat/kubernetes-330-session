@@ -32,7 +32,7 @@ spec:
               values: 
               - ap-south-1b 
   toleration: 
-    - key: "ondemand"
-      operator: "Equal"
-      value: "app"
-      effect: "NoSchedule"            
+  - key: "ondemand"
+    operator: "Equal"
+    value: "app"
+    effect: "NoSchedule"            
