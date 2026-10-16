@@ -31,7 +31,7 @@ spec:
               operator: Exist
               values: 
               - ap-south-1b 
-  toleration: 
+  tolerations: 
   - key: "ondemand"
     operator: "Equal"
     value: "app"
