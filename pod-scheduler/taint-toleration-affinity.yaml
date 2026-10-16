@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox1
+  labels:
+    app.kubernetes.io/name: busybox1
+spec:
+  containers:
+  - name: busybox1
+    image: busybox:latest
+    resources: 
+      requests: 
+        cpu: "500M"
+        memory: "500Mi"
+      limits: 
+        cpu: "700M"
+        memory: "700Mi"
+    args: 
+    - sleep 
+    - "10000"
+  affinity: 
+     nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: ondemand
+              operator: In
+              values:
+              - app 
+            - key: topology.kubernetes.io/zone
+              operator: Exist
+              values: 
+              - ap-south-1b 
+  toleration: 
+    - key: "ondemand"
+      operator: "Equal"
+      value: "app"
+      effect: "NoSchedule"            
