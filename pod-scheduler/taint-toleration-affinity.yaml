@@ -36,3 +36,43 @@ spec:
     operator: "Equal"
     value: "app"
     effect: "NoSchedule"            
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox2
+  labels:
+    app.kubernetes.io/name: busybox2
+spec:
+  containers:
+  - name: busybo2
+    image: busybox:latest
+    # resources: 
+    #   requests: 
+    #     cpu: "100M"
+    #     memory: "100Mi"
+    #   limits: 
+    #     cpu: "200M"
+    #     memory: "200Mi"
+    args: 
+    - sleep 
+    - "10000"
+  affinity: 
+     nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: ondemand
+              operator: In
+              values:
+              - mgmt
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values: 
+              - ap-south-1b
+  tolerations: 
+  - key: "ondemand"
+    operator: "Equal"
+    value: "mgmt"
+    effect: "NoSchedule"            
