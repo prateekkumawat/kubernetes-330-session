@@ -28,7 +28,7 @@ spec:
               values:
               - app 
             - key: topology.kubernetes.io/zone
-              operator: Exist
+              operator: Exists
               values: 
               - ap-south-1b 
   tolerations: 
