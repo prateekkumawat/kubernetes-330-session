@@ -1,3 +1,4 @@
+# kubectl patch configmap argocd-cmd-params-cm -n argocd --type merge -p '{"data":{"server.insecure":"true"}}'
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,8 +7,7 @@ metadata:
     app.kubernetes.io/name: argocd-server
   namespace: argocd
   annotations:
-    konghq.com/strip-path: "true"
-    konghq.com/protocols: "https"
+    konghq.com/protocols: "http"
 spec:
   ingressClassName: kong
   rules:

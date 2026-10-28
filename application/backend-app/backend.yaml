@@ -106,7 +106,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: swagger.apps.ocelottraining.com
+  - host: api.ocelottraining.com
     http:
       paths:
       - pathType: Prefix
@@ -116,7 +116,7 @@ spec:
             name: pulse-api-app-svc
             port: 
               number: 80
-  - host: swagger.apps.ocelottraining.com
+  - host: api.ocelottraining.com
     http:
       paths:
       - pathType: Prefix

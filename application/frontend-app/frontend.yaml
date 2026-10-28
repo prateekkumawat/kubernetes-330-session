@@ -59,7 +59,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: pulse.apps.ocelottraining.com
+  - host: pulse.ocelottraining.com
     http:
       paths:
       - pathType: Prefix
