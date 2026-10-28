@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pulse-ui
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pulse-ui-app
+  namespace: pulse-ui
+spec:
+  selector:
+    matchLabels:
+      app: apiapps
+  template:
+    metadata:
+      labels:
+        app: apiapps
+    spec:
+      containers:
+      - name: pulse-ui-app
+        image: prateekkumawat/apiapp:fe-1.1
+        resources:
+          requests: 
+            memory: "500Mi"
+            cpu: "500m"
+          limits:
+            memory: "800Mi"
+            cpu: "1"
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pulse-ui-svc
+  namespace: pulse-ui
+spec:
+  selector:
+    app: apiapps
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pulse-ui-ingress
+  labels:
+    app: apiapps
+  namespace: pulse-ui 
+  annotations:
+    konghq.com/strip-path: "true"
+    konghq.com/protocols: "http"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: pulse.apps.ocelottraining.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: pulse-ui-svc
+            port: 
+              number: 80
