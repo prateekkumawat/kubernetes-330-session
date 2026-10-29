@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: pulse-ui-app
-        image: prateekkumawat/apiapp:fe-1.2
+        image: prateekkumawat/apiapp:fe-1.3
         resources:
           requests: 
             memory: "500Mi"
