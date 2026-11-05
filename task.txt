@@ -1,1 +1,0 @@
-create dockerfile for given template and push images on dockerhub and deploy on kubernetes. 

@@ -1,0 +1,11 @@
+env = "pp"
+project = "hsit-infra"
+Region = "us-east-1"
+vpc_cidr = "10.100.0.0/16"
+subnet1_cidr = "10.100.1.0/24"
+subnet2_cidr = "10.100.2.0/24"
+subnet3_cidr = "10.100.3.0/24"
+availability_zone = ["us-east-1a", "us-east-1b", "us-east-1c"]
+ami_id = "ami-0c230065b91270bc6"
+instance_type = "t2.micro"
+key_name = "hsit-aws-key"

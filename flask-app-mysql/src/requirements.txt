@@ -1,7 +1,0 @@
-flask
-mysql-connector-python
-Werkzeug
-Jinja2
-MarkupSafe
-itsdangerous
-click
